@@ -23,26 +23,15 @@ module RedmineWebhook
     private
     def issue_to_json(issue, controller)
       {
-        :body => issue.subject,
+        :body => 'issue',
         :connectColor => '#03a800'
-        # :payload => {
-        #   :action => 'opened',
-        #   :issue => RedmineWebhook::IssueWrapper.new(issue).to_hash,
-        #   :url => controller.issue_url(issue)
-        # }
       }.to_json
     end
 
     def journal_to_json(issue, journal, controller)
       {
-        :body => issue.subject,
+        :body => 'journal',
         :connectColor => '#03a800'
-        # :payload => {
-        #   :action => 'updated',
-        #   :issue => RedmineWebhook::IssueWrapper.new(issue).to_hash,
-        #   :journal => RedmineWebhook::JournalWrapper.new(journal).to_hash,
-        #   :url => controller.issue_url(issue)
-        # }
       }.to_json
     end
 
