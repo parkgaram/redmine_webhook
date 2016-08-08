@@ -23,22 +23,26 @@ module RedmineWebhook
     private
     def issue_to_json(issue, controller)
       {
-        :payload => {
-          :action => 'opened',
-          :issue => RedmineWebhook::IssueWrapper.new(issue).to_hash,
-          :url => controller.issue_url(issue)
-        }
+        :body => issue.subject,
+        :connectColor => '#03a800'
+        # :payload => {
+        #   :action => 'opened',
+        #   :issue => RedmineWebhook::IssueWrapper.new(issue).to_hash,
+        #   :url => controller.issue_url(issue)
+        # }
       }.to_json
     end
 
     def journal_to_json(issue, journal, controller)
       {
-        :payload => {
-          :action => 'updated',
-          :issue => RedmineWebhook::IssueWrapper.new(issue).to_hash,
-          :journal => RedmineWebhook::JournalWrapper.new(journal).to_hash,
-          :url => controller.issue_url(issue)
-        }
+        :body => issue.subject,
+        :connectColor => '#03a800'
+        # :payload => {
+        #   :action => 'updated',
+        #   :issue => RedmineWebhook::IssueWrapper.new(issue).to_hash,
+        #   :journal => RedmineWebhook::JournalWrapper.new(journal).to_hash,
+        #   :url => controller.issue_url(issue)
+        # }
       }.to_json
     end
 
@@ -48,6 +52,7 @@ module RedmineWebhook
           Faraday.post do |req|
             req.url webhook.url
             req.headers['Content-Type'] = 'application/json'
+            req.headers['Accept'] = 'application/vnd.tosslab.jandi-v2+json'
             req.body = request_body
           end
         rescue => e
